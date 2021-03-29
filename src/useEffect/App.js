@@ -9,7 +9,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
         <button onClick={() => {
           this.setState({ headerText: 'Hello, today is: ' + new Date().toString() })
         }}>Change Header Text</button>
