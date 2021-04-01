@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import Modal from '../components/Modal/Modal';
 import Dux from './dux';
 
+// Note that we provide the HOC with the axios instance the wrapped
+// component uses. The HOC got to recieve this axios instance in order
+// to install interceptor on it.
 const withErrorHandler = (WrappedComponent, axios) => {
     return class extends Component {
         state = {
