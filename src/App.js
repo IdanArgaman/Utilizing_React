@@ -3,6 +3,8 @@ import UseEffectExampleApp from './useEffect/App';
 import ExampleOfHoc from './hoc/App';
 import UseContextApp from './useContext/App';
 import TracerApp from './tracer-by-hoc/App';
+import ErrorHandlingApp from './error-handling-hoc/App';
+
 class App extends Component {
   render() {
     return (
@@ -11,6 +13,7 @@ class App extends Component {
         <ExampleOfHoc />
         <UseContextApp />
         <TracerApp />
+        <ErrorHandlingApp />
       </Fragment>
     )
   }
