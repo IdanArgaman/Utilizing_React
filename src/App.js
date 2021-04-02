@@ -4,6 +4,7 @@ import ExampleOfHoc from './hoc/App';
 import UseContextApp from './useContext/App';
 import TracerApp from './tracer-by-hoc/App';
 import ErrorHandlingApp from './error-handling-hoc/App';
+import TodosReduxApp from './todos-redux-example/App';
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
         <UseContextApp />
         <TracerApp />
         <ErrorHandlingApp />
+        <TodosReduxApp />
       </Fragment>
     )
   }
