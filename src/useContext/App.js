@@ -9,10 +9,10 @@ function App() {
   // Remember that the return from useState is an array with the first element
   // as the data and the second one is an updater function
   const themeHook = useState("light");
+  console.log('App render!');
 
   return (
     // We equip the provider with the hook!
-    //
     <ThemeContext.Provider value={themeHook}>
       <div className="App">
         <Header />
