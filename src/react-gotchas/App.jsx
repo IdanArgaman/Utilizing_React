@@ -17,6 +17,8 @@ import RefBypass from './containers/RefBypass/RefBypass';
 import AbortControllerFetch from './containers/AbortControllerFetch/AbortControllerFetch';
 import UseIntervalHook from './containers/UseIntervalHook/UseIntervalHook';
 import SplitContext from './containers/SplitContext/SplitContext';
+import MemoStrategies from './containers/MemoStrategies/MemoStrategies';
+import CustomComparator from './containers/CustomComparator/CustomComparator';
 
 // List of every "gotcha" example. Both the nav list on the Home page and the
 // <Route> table below are generated from this single array, so adding a new
@@ -61,6 +63,16 @@ export const examples = [
     path: '/react-gotchas/split-context',
     label: '8. Context Bottlenecks & the Split Context Pattern',
     component: SplitContext,
+  },
+  {
+    path: '/react-gotchas/memo-strategies',
+    label: '9. Referential Identity: Three Fixing Strategies',
+    component: MemoStrategies,
+  },
+  {
+    path: '/react-gotchas/custom-comparator',
+    label: '10. Custom Equality Comparator (arePropsEqual)',
+    component: CustomComparator,
   },
 ];
 
