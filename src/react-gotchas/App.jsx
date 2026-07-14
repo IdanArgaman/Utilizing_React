@@ -13,9 +13,13 @@ import StaleClosure from './containers/StaleClosure/StaleClosure';
 import BatchingDemo from './containers/BatchingDemo/BatchingDemo';
 import RaceCondition from './containers/RaceCondition/RaceCondition';
 import ReferentialIdentity from './containers/ReferentialIdentity/ReferentialIdentity';
+import RefBypass from './containers/RefBypass/RefBypass';
+import AbortControllerFetch from './containers/AbortControllerFetch/AbortControllerFetch';
+import UseIntervalHook from './containers/UseIntervalHook/UseIntervalHook';
+import SplitContext from './containers/SplitContext/SplitContext';
 
 // List of every "gotcha" example. Both the nav list on the Home page and the
-// <Route> table below are generated from this single array, so adding a 5th
+// <Route> table below are generated from this single array, so adding a new
 // example later only means pushing one more entry here.
 export const examples = [
   {
@@ -37,6 +41,26 @@ export const examples = [
     path: '/react-gotchas/referential-identity',
     label: '4. Referential Identity & Re-renders (memo trap)',
     component: ReferentialIdentity,
+  },
+  {
+    path: '/react-gotchas/ref-bypass',
+    label: '5. Multi-Stage State Batching & useState vs. useRef',
+    component: RefBypass,
+  },
+  {
+    path: '/react-gotchas/abort-controller-fetch',
+    label: '6. Resilient Fetch Race Conditions (AbortController)',
+    component: AbortControllerFetch,
+  },
+  {
+    path: '/react-gotchas/use-interval-hook',
+    label: '7. Custom Hooks: The "Latest Ref Pattern" (useInterval)',
+    component: UseIntervalHook,
+  },
+  {
+    path: '/react-gotchas/split-context',
+    label: '8. Context Bottlenecks & the Split Context Pattern',
+    component: SplitContext,
   },
 ];
 
