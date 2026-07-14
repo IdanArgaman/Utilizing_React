@@ -2,14 +2,21 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
+
+# yarn berry
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
 # testing
 /coverage
 
 # production
-/build
+/dist
 
 # misc
 .DS_Store
