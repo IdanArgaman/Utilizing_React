@@ -19,6 +19,8 @@ import UseIntervalHook from './containers/UseIntervalHook/UseIntervalHook';
 import SplitContext from './containers/SplitContext/SplitContext';
 import MemoStrategies from './containers/MemoStrategies/MemoStrategies';
 import CustomComparator from './containers/CustomComparator/CustomComparator';
+import UseDebounceHook from './containers/UseDebounceHook/UseDebounceHook';
+import QueueingStateUpdates from './containers/QueueingStateUpdates/QueueingStateUpdates';
 
 // List of every "gotcha" example. Both the nav list on the Home page and the
 // <Route> table below are generated from this single array, so adding a new
@@ -73,6 +75,16 @@ export const examples = [
     path: '/react-gotchas/custom-comparator',
     label: '10. Custom Equality Comparator (arePropsEqual)',
     component: CustomComparator,
+  },
+  {
+    path: '/react-gotchas/use-debounce-hook',
+    label: '11. useDebouncedCallback & the Unstable Dependency Trap',
+    component: UseDebounceHook,
+  },
+  {
+    path: '/react-gotchas/queueing-state-updates',
+    label: '12. Queueing State Updates: Mixing Values and Updater Functions',
+    component: QueueingStateUpdates,
   },
 ];
 
