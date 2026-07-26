@@ -8,11 +8,20 @@ This is a personal React learning/reference playground, not a product codebase. 
 
 The most actively developed part of this repo is `src/react-gotchas/` — a growing collection of React interview-prep "gotcha" examples (stale closures, batching, race conditions, referential identity, memoization strategies, etc.), each with a broken version and a fixed version side by side, heavily commented to explain the *why*. **When the user says "add to gotcha" (or similar shorthand), they mean: add a new numbered example to `src/react-gotchas/`, following the existing pattern** (see Architecture below).
 
+## Language: TypeScript by default
+
+**Unless the user specifically asks for plain JavaScript, write new files in TypeScript (`.ts`/`.tsx`), not `.js`/`.jsx`.** TypeScript (`typescript`, `@types/react`, `@types/react-dom`, `@types/react-router-dom`) is installed and `tsconfig.json` is configured at the repo root (`jsx: react-jsx`, `strict: true`, `allowJs: true`). Vite/esbuild transpiles `.ts`/`.tsx` automatically — no build config changes are needed when adding new TS files.
+
+The bulk of the existing codebase (everything predating this) is still plain `.jsx`/`.js` — `allowJs` is on specifically so old and new files coexist without a mass migration. Don't rewrite existing `.jsx` files to `.tsx` as a drive-by; convert a file only when the user is already substantially editing it or explicitly asks.
+
+`@types/react`/`@types/react-dom` are pinned to v18 via both the direct devDependency range and a top-level `resolutions` entry in `package.json`, matching the installed `react`/`react-dom` v18 — some transitive deps (e.g. `@types/react-router`) otherwise pull their own nested `@types/react@19`, which produces JSX type errors (`ReactNode` incompatible via `bigint`). If a fresh install reintroduces that error, check for a stray nested `@types/react` under `node_modules/@types/*/node_modules/@types/react` first.
+
 ## Commands
 
 - `yarn start` — run the Vite dev server (hot reload).
 - `yarn build` — production build via Vite, output to `dist/`.
 - `yarn preview` — preview the production build locally.
+- `yarn typecheck` — `tsc --noEmit`, type-checks the whole project (including `.jsx`/`.js` files, since `allowJs` is on and `checkJs` is off, so JS files are included for module resolution but not type-checked themselves). Vite's own build does NOT type-check — it only transpiles — so run this separately to catch type errors.
 
 There is no configured lint or test runner. A couple of `.spec.js` files exist under `src/todos-redux-example/` but no test framework (jest/vitest) is installed and no `test` script is defined — don't assume they run. `eslint-config-prettier`/`eslint-plugin-prettier` are devDependencies but there is no `.eslintrc`, so there's no active lint command either.
 
@@ -37,9 +46,9 @@ Every folder under `src/` other than `containers/` (e.g. `useEffect/`, `hoc/`, `
 ### `src/react-gotchas/` — the gotcha examples app
 
 This is where new work is concentrated. Structure:
-- `src/react-gotchas/App.jsx` exports an `examples` array (path/label/component) — the same generator pattern as `appsList.js`, but scoped to gotcha examples. Adding a new gotcha means adding one entry here.
+- `src/react-gotchas/App.jsx` exports an `examples` array (path/label/component) — the same generator pattern as `appsList.js`, but scoped to gotcha examples. Adding a new gotcha means adding one entry here. (`App.jsx` itself stays `.jsx` — only new gotcha content files default to TypeScript, per the Language section above.)
 - `src/react-gotchas/containers/Home.jsx` lists all entries from `examples` as links.
-- Each gotcha lives in its own `src/react-gotchas/containers/<Name>/<Name>.jsx` folder.
+- Each gotcha lives in its own `src/react-gotchas/containers/<Name>/<Name>.tsx` folder (`.jsx` for gotchas predating the TypeScript setup).
 
 **Established convention for every gotcha example** (follow this for any new one):
 1. A large top-of-file comment block explaining the concept: the problem, why it happens, and the fix — written for someone learning the concept, not just a code comment.
