@@ -38,17 +38,32 @@ function updateChildrenById(
   id: string,
   updater: (children: TreeNode[]) => TreeNode[]
 ): TreeNode[] {
+  let found = false;
   return nodes.map((node) => {
+    // Ids are unique, so once we've applied the update, every remaining
+    // sibling (and its whole subtree) can't contain it - skip recursing
+    // into them instead of walking dead ends.
+    if (found) {
+      return node;
+    }
+
+    // Update and break recursion if we found the node with the matching id.
     if (node.id === id) {
+      found = true;
       return { ...node, children: updater(node.children) };
     }
+
+    // Break recursion if no children.
     if (node.children.length === 0) {
       return node;
     }
+
     const updatedChildren = updateChildrenById(node.children, id, updater);
-    return updatedChildren === node.children
-      ? node
-      : { ...node, children: updatedChildren };
+    if (updatedChildren !== node.children) {
+      found = true;
+      return { ...node, children: updatedChildren };
+    }
+    return node;
   });
 }
 
@@ -81,26 +96,46 @@ export function removeNode(tree: TreeNode[], id: string): TreeNode[] {
 }
 
 export function renameNode(tree: TreeNode[], id: string, name: string): TreeNode[] {
+  let found = false;
   return tree.map((node) => {
+    // Ids are unique, so once we've renamed the target node, every
+    // remaining sibling (and its whole subtree) can't contain it -
+    // skip recursing into them instead of walking dead ends.
+    if (found) {
+      return node;
+    }
     if (node.id === id) {
+      found = true;
       return { ...node, name };
     }
     const renamedChildren = renameNode(node.children, id, name);
-    return renamedChildren === node.children
-      ? node
-      : { ...node, children: renamedChildren };
+    if (renamedChildren !== node.children) {
+      found = true;
+      return { ...node, children: renamedChildren };
+    }
+    return node;
   });
 }
 
 export function toggleExpanded(tree: TreeNode[], id: string): TreeNode[] {
+  let found = false;
   return tree.map((node) => {
+    // Ids are unique, so once we've toggled the target node, every
+    // remaining sibling (and its whole subtree) can't contain it - skip
+    // recursing into them instead of walking dead ends.
+    if (found) {
+      return node;
+    }
     if (node.id === id) {
+      found = true;
       return { ...node, isExpanded: !node.isExpanded };
     }
     const updatedChildren = toggleExpanded(node.children, id);
-    return updatedChildren === node.children
-      ? node
-      : { ...node, children: updatedChildren };
+    if (updatedChildren !== node.children) {
+      found = true;
+      return { ...node, children: updatedChildren };
+    }
+    return node;
   });
 }
 
