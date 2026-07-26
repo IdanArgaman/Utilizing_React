@@ -75,13 +75,24 @@ export function addChild(tree: TreeNode[], parentId: string, name: string): Tree
 }
 
 export function removeNode(tree: TreeNode[], id: string): TreeNode[] {
+  // If the id is a direct child at this level, it's removed by the filter
+  // below and (being unique) can't also appear in a sibling's subtree - skip
+  // recursing into children entirely in that case.
+  const removedHere = tree.some((node) => node.id === id);
+
+  let found = false;
   const withoutId = tree
     .filter((node) => node.id !== id)
     .map((node) => {
+      if (removedHere || found) {
+        return node;
+      }
       const filteredChildren = removeNode(node.children, id);
-      return filteredChildren === node.children
-        ? node
-        : { ...node, children: filteredChildren };
+      if (filteredChildren !== node.children) {
+        found = true;
+        return { ...node, children: filteredChildren };
+      }
+      return node;
     });
 
   // Bail out early with the original array reference if nothing changed at
