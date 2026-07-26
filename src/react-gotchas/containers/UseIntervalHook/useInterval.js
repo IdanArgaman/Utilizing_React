@@ -38,6 +38,9 @@ export function useInterval(callback, delay) {
 
   // Keep the ref pointed at the latest closure, without needing to
   // re-run (or even touch) the timer-setup effect below.
+  
+  // We named this "Latest Ref Pattern" in the blog post, but it's also known 
+  // as a "ref callback" or "ref container" pattern.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
