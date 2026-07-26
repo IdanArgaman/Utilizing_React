@@ -6,6 +6,7 @@ import ErrorHandlingApp from './error-handling-hoc/App';
 import TodosReduxApp from './todos-redux-example/App';
 import RouterApp from './react-router/App';
 import ReactGotchasApp from './react-gotchas/App';
+import CodeSamplesApp from './code-samples/App';
 
 // Single source of truth for every example "mini app" in this repo.
 // Both the Home page's link list (src/containers/Home.jsx) and the <Route>
@@ -67,5 +68,12 @@ export const apps = [
     description:
       'Four classic React interview gotchas with broken vs. fixed code side by side: stale closures, batching, fetch race conditions, and referential identity.',
     component: ReactGotchasApp,
+  },
+  {
+    path: '/code-samples',
+    label: 'Code Samples',
+    description:
+      'Practical, reusable component patterns (not gotcha demos) - starting with a recursive tree/menu supporting add, rename, remove, and click-to-select.',
+    component: CodeSamplesApp,
   },
 ];
