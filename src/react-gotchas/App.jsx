@@ -22,6 +22,7 @@ import CustomComparator from './containers/CustomComparator/CustomComparator';
 import UseDebounceHook from './containers/UseDebounceHook/UseDebounceHook';
 import QueueingStateUpdates from './containers/QueueingStateUpdates/QueueingStateUpdates';
 import WindowEventHooks from './containers/hooks/WindowEventHooks';
+import RecursiveTimeoutLoop from './containers/RecursiveTimeoutLoop/RecursiveTimeoutLoop';
 
 // List of every "gotcha" example. Both the nav list on the Home page and the
 // <Route> table below are generated from this single array, so adding a new
@@ -91,6 +92,11 @@ export const examples = [
     path: '/react-gotchas/window-event-hooks',
     label: '13. Custom Hooks: Correlated Generics (useWindowEvent / useDocumentEvent)',
     component: WindowEventHooks,
+  },
+  {
+    path: '/react-gotchas/recursive-timeout-loop',
+    label: '14. Stale Closures in a Self-Rescheduling setTimeout Loop',
+    component: RecursiveTimeoutLoop,
   },
 ];
 
