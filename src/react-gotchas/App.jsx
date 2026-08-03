@@ -24,6 +24,7 @@ import QueueingStateUpdates from './containers/QueueingStateUpdates/QueueingStat
 import WindowEventHooks from './containers/hooks/WindowEventHooks';
 import RecursiveTimeoutLoop from './containers/RecursiveTimeoutLoop/RecursiveTimeoutLoop';
 import RenderTriggerModel from './containers/RenderTriggerModel/RenderTriggerModel';
+import RenderCommitPaintTimeline from './containers/RenderCommitPaintTimeline/RenderCommitPaintTimeline';
 
 // List of every "gotcha" example. Both the nav list on the Home page and the
 // <Route> table below are generated from this single array, so adding a new
@@ -103,6 +104,11 @@ export const examples = [
     path: '/react-gotchas/render-trigger-model',
     label: '15. How React Actually Decides What Re-renders',
     component: RenderTriggerModel,
+  },
+  {
+    path: '/react-gotchas/render-commit-paint-timeline',
+    label: '16. Render -> Commit -> Paint -> Effects (the full timeline)',
+    component: RenderCommitPaintTimeline,
   },
 ];
 
