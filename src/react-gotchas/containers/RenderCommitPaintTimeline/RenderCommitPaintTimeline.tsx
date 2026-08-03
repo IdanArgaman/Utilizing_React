@@ -45,7 +45,10 @@ import { Link } from 'react-router-dom';
 // tree, so the actual interleaving is visible instead of theoretical.
 // Section B then shows *why* the ordering matters: writing to the DOM in
 // useEffect vs. useLayoutEffect produces a visible one-frame flicker in one
-// case and not the other.
+// case and not the other. Section C is a no-code history note: class
+// components solved this same problem years before useLayoutEffect
+// existed, via componentDidMount/componentDidUpdate and a few workaround
+// patterns worth recognizing if you ever read pre-Hooks React code.
 
 // ----------------------------------------------------------------------------
 // Shared timeline logger: every entry gets a high-resolution timestamp so
@@ -357,6 +360,62 @@ function RenderCommitPaintTimeline() {
         "never blocks the browser" (useEffect's advantage) for "can never
         produce a visible intermediate frame".
       </p>
+
+      <hr />
+      <div style={{ textAlign: 'left'}}>
+      <h3>C) Before useLayoutEffect existed: how class components avoided this</h3>
+      <p>
+        <code>useLayoutEffect</code> was introduced with Hooks in React 16.8
+        (early 2019). Class components had already been solving this exact
+        flicker problem for years - just without a hook to name it.
+      </p>
+      <p>
+        <strong>componentDidMount / componentDidUpdate</strong> occupy the
+        same slot in the timeline that <code>useLayoutEffect</code> does
+        today: React calls them synchronously right after committing DOM
+        mutations, but before the browser paints. If you called{' '}
+        <code>setState</code> or measured the DOM inside one of them, React
+        would intercept the pipeline and run a synchronous re-render before
+        ever handing control back to the browser to paint - so, just like
+        Section B's green box, the user's first frame only ever showed the
+        final, corrected layout.
+      </p>
+      <p>Three patterns filled in the gaps class lifecycles didn't fully cover:</p>
+      <ul>
+        <li>
+          <strong>The hidden-first-render trick.</strong> Render the
+          component with <code>opacity: 0</code> or{' '}
+          <code>visibility: hidden</code>, measure its (already-committed,
+          already-in-the-DOM) nodes inside{' '}
+          <code>componentDidMount</code>, adjust position/size from those
+          measurements, then flip visibility back on - all still before
+          paint, so the hidden frame was never actually seen.
+        </li>
+        <li>
+          <strong>Direct imperative DOM mutation via refs.</strong> Skip
+          React's reconciliation loop entirely for the specific mutation:
+          grab the raw node with a ref and set{' '}
+          <code>element.style.left = ...</code> (or similar) straight in
+          vanilla JS, synchronously, inside the same pre-paint lifecycle
+          window.
+        </li>
+        <li>
+          <strong>Pre-calculated constraints.</strong> The cheapest fix of
+          all when available: avoid needing a post-commit measurement step
+          in the first place by moving the layout logic upstream into pure
+          CSS (flexbox, grid, absolute positioning) so the browser resolves
+          the final layout natively, with no JavaScript-driven correction
+          pass required at all.
+        </li>
+      </ul>
+      <p style={{ fontSize: '0.85rem', color: '#555' }}>
+        <code>useLayoutEffect</code> didn't invent this pre-paint timing
+        window - it just gave function components a direct hook into the
+        same window class components already had, without needing a class,
+        a hidden-render trick, or hand-written imperative DOM code for the
+        common case.
+      </p>
+      </div>
     </div>
   );
 }
