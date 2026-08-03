@@ -6,6 +6,7 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 
 import Home from './containers/Home';
 import TreeMenu from './containers/TreeMenu/TreeMenu';
+import CounterTimer from './containers/CounterTimer/CounterTimer';
 
 // List of every code sample. Both the Home page's link list and the <Route>
 // table below are generated from this single array, so adding a new sample
@@ -16,6 +17,11 @@ export const samples = [
     path: '/code-samples/tree-menu',
     label: '1. Recursive Tree Menu (add / rename / remove / select)',
     component: TreeMenu,
+  },
+  {
+    path: '/code-samples/counter-timer',
+    label: '2. Counter Timer (setInterval + cleanup)',
+    component: CounterTimer,
   },
 ];
 
