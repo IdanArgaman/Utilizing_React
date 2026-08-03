@@ -23,6 +23,7 @@ import UseDebounceHook from './containers/UseDebounceHook/UseDebounceHook';
 import QueueingStateUpdates from './containers/QueueingStateUpdates/QueueingStateUpdates';
 import WindowEventHooks from './containers/hooks/WindowEventHooks';
 import RecursiveTimeoutLoop from './containers/RecursiveTimeoutLoop/RecursiveTimeoutLoop';
+import RenderTriggerModel from './containers/RenderTriggerModel/RenderTriggerModel';
 
 // List of every "gotcha" example. Both the nav list on the Home page and the
 // <Route> table below are generated from this single array, so adding a new
@@ -97,6 +98,11 @@ export const examples = [
     path: '/react-gotchas/recursive-timeout-loop',
     label: '14. Stale Closures in a Self-Rescheduling setTimeout Loop',
     component: RecursiveTimeoutLoop,
+  },
+  {
+    path: '/react-gotchas/render-trigger-model',
+    label: '15. How React Actually Decides What Re-renders',
+    component: RenderTriggerModel,
   },
 ];
 
